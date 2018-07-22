@@ -46,13 +46,13 @@ fi
 
 # Run benchmark
 
-./SmtCacheBlocking $(($l1CacheSize * 1024 / 1)) $((8000 * 1))
+./SmtCacheBlocking $(($l1CacheSize * 1024 / 1)) $((800000 * 1))
 echo ""
 sleep 5
-./SmtCacheBlocking $(($l1CacheSize * 1024 / 2)) $((8000 * 2))
+./SmtCacheBlocking $(($l1CacheSize * 1024 / 2)) $((800000 * 2))
 echo ""
 sleep 5
-./SmtCacheBlocking $(($l2CacheSize * 1024 / 1)) $((2000 * 1))
+./SmtCacheBlocking $(($l2CacheSize * 1024 / 1)) $((200000 * 1))
 echo ""
 sleep 5
-./SmtCacheBlocking $(($l2CacheSize * 1024 / 2)) $((2000 * 2))
+./SmtCacheBlocking $(($l2CacheSize * 1024 / 2)) $((200000 * 2))

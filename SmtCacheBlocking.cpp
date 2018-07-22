@@ -14,9 +14,9 @@ void cacheBenchmark(std::vector<char>& vect)
 
     std::size_t size = vect.size();
 
-    for (std::size_t i = 0; i < size * 100; i++)
+    for (std::size_t i = 0; i < size; i++)
     {
-        // xorshf96 random number generator
+        // xorshf96: fast random number generator
         unsigned long t;
         x ^= x << 16;
         x ^= x >> 5;
