@@ -46,12 +46,17 @@ fi
 
 # Run benchmark
 
+echo "=== L1 cache benchmark ==="
+echo ""
 ./SmtCacheBlocking $(($l1CacheSize * 1024 / 1)) $((800000 * 1))
 echo ""
 sleep 5
 ./SmtCacheBlocking $(($l1CacheSize * 1024 / 2)) $((800000 * 2))
 echo ""
 sleep 5
+
+echo "=== L2 cache benchmark ==="
+echo ""
 ./SmtCacheBlocking $(($l2CacheSize * 1024 / 1)) $((200000 * 1))
 echo ""
 sleep 5
