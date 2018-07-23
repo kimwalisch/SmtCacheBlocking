@@ -6,30 +6,6 @@
 #include <atomic>
 #include <cmath>
 
-void cacheBenchmark(std::vector<char>& vect)
-{
-    unsigned long x = 123456789;
-    unsigned long y = 362436069;
-    unsigned long z = 521288629;
-
-    std::size_t size = vect.size();
-
-    for (std::size_t i = 0; i < size; i++)
-    {
-        // xorshf96: fast random number generator
-        unsigned long t;
-        x ^= x << 16;
-        x ^= x >> 5;
-        x ^= x << 1;
-        t = x;
-        x = y;
-        y = z;
-        z = t ^ x ^ y;
-
-        vect[z & (size - 1)] += z & 127;
-    }
-}
-
 int main(int argc, char** argv)
 {
     if (argc != 3)
@@ -55,19 +31,47 @@ int main(int argc, char** argv)
     std::vector<std::vector<char>> vectors;
     vectors.resize(threads);
 
-    for (std::size_t i = 0; i < vectors.size(); i++)
-        vectors[i].resize(bytes, 0);
-
     // each thread executes 1 task
     auto task = [&](int threadId)
     {
+        auto& vect = vectors[threadId];
+        vect.resize(bytes, 0);
+
+        unsigned long x = 123456789;
+        unsigned long y = 362436069;
+        unsigned long z = 521288629;
+
         while (i++ < iters)
-            cacheBenchmark(vectors[threadId]);
+        {
+            for (std::size_t s = 0; s < bytes; s++)
+            {
+                // xorshf96: fast random number generator
+                unsigned long t;
+                x ^= x << 16;
+                x ^= x >> 5;
+                x ^= x << 1;
+                t = x;
+                x = y;
+                y = z;
+                z = t ^ x ^ y;
+
+                // compute 4 random indexes
+                unsigned long i1 = z;
+                unsigned long i2 = (z >> 16) + ((z & 0xffff) << 48);
+                unsigned long i3 = (z >> 32) + (z << 32);
+                unsigned long i4 = (z >> 48) + (z << 48);
+
+                vect[i1 & (bytes - 1)] += (char) i1;
+                vect[i2 & (bytes - 1)] += (char) i2;
+                vect[i3 & (bytes - 1)] += (char) i3;
+                vect[i4 & (bytes - 1)] += (char) i4;
+            }
+        }
 
         std::size_t sum = 0;
 
-        for (std::size_t j = 0; j < vectors[threadId].size(); j++)
-            sum += vectors[threadId][j];
+        for (auto n : vect)
+            sum += n;
 
         return sum;
     };
