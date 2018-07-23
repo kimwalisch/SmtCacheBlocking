@@ -1,6 +1,6 @@
 # SmtCacheBlocking
 
-The question this benchmark tries to answer:
+This benchmark tries to answer the question:
 
 In a multi-threaded program should we try to assign half of the cache
 to the first thread and the other half of the cache to the second thread
