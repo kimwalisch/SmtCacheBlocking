@@ -62,10 +62,10 @@ then
     sleep $sleepSeconds
     echo "=== L2 cache benchmark ==="
     echo ""
-    perf stat -e L1-dcache-loads,L1-dcache-load-misses,LLC-loads ./SmtCacheBlocking $(($l2CacheSize * 1024 / 1)) $(($itersL2 * 1))
+    perf stat -e L1-dcache-loads,L1-dcache-load-misses,LLC-loads,LLC-load-misses ./SmtCacheBlocking $(($l2CacheSize * 1024 / 1)) $(($itersL2 * 1))
     echo ""
     sleep $sleepSeconds
-    perf stat -e L1-dcache-loads,L1-dcache-load-misses,LLC-loads ./SmtCacheBlocking $(($l2CacheSize * 1024 / 2)) $(($itersL2 * 2))
+    perf stat -e L1-dcache-loads,L1-dcache-load-misses,LLC-loads,LLC-load-misses ./SmtCacheBlocking $(($l2CacheSize * 1024 / 2)) $(($itersL2 * 2))
 else
     echo "=== L1 cache benchmark ==="
     echo ""
