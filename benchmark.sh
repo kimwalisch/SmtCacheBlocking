@@ -42,23 +42,43 @@ else
     exit 1
 fi
 
-itersL1=200000
+itersL1=100000
 itersL2=$(($itersL1 / ($l2CacheSize / $l1CacheSize)))
+sleepSeconds=5
 
 # Run benchmark
 
-echo "=== L1 cache benchmark ==="
-echo ""
-./SmtCacheBlocking $(($l1CacheSize * 1024 / 1)) $(($itersL1 * 1))
-echo ""
-sleep 5
-./SmtCacheBlocking $(($l1CacheSize * 1024 / 2)) $(($itersL1 * 2))
-echo ""
-sleep 5
+command -v perf >/dev/null 2>/dev/null
 
-echo "=== L2 cache benchmark ==="
-echo ""
-./SmtCacheBlocking $(($l2CacheSize * 1024 / 1)) $(($itersL2 * 1))
-echo ""
-sleep 5
-./SmtCacheBlocking $(($l2CacheSize * 1024 / 2)) $(($itersL2 * 2))
+if [ $? -eq 0 ] && [ "$(whoami)" = "root" ]
+then
+    echo "=== L1 cache benchmark ==="
+    echo ""
+    perf stat -e L1-dcache-loads,L1-dcache-stores,L1-dcache-load-misses ./SmtCacheBlocking $(($l1CacheSize * 1024 / 1)) $(($itersL1 * 1))
+    echo ""
+    sleep $sleepSeconds
+    perf stat -e L1-dcache-loads,L1-dcache-stores,L1-dcache-load-misses ./SmtCacheBlocking $(($l1CacheSize * 1024 / 2)) $(($itersL1 * 2))
+    echo ""
+    sleep $sleepSeconds
+    echo "=== L2 cache benchmark ==="
+    echo ""
+    perf stat -e L1-dcache-loads,L1-dcache-load-misses,LLC-loads ./SmtCacheBlocking $(($l2CacheSize * 1024 / 1)) $(($itersL2 * 1))
+    echo ""
+    sleep $sleepSeconds
+    perf stat -e L1-dcache-loads,L1-dcache-load-misses,LLC-loads ./SmtCacheBlocking $(($l2CacheSize * 1024 / 2)) $(($itersL2 * 2))
+else
+    echo "=== L1 cache benchmark ==="
+    echo ""
+    ./SmtCacheBlocking $(($l1CacheSize * 1024 / 1)) $(($itersL1 * 1))
+    echo ""
+    sleep $sleepSeconds
+    ./SmtCacheBlocking $(($l1CacheSize * 1024 / 2)) $(($itersL1 * 2))
+    echo ""
+    sleep $sleepSeconds
+    echo "=== L2 cache benchmark ==="
+    echo ""
+    ./SmtCacheBlocking $(($l2CacheSize * 1024 / 1)) $(($itersL2 * 1))
+    echo ""
+    sleep $sleepSeconds
+    ./SmtCacheBlocking $(($l2CacheSize * 1024 / 2)) $(($itersL2 * 2))
+fi
