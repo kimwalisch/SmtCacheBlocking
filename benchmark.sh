@@ -10,7 +10,8 @@ fi
 
 if [ ! -f $(pwd)/SmtCacheBlocking ]
 then
-    c++ -O3 -march=native -std=c++11 SmtCacheBlocking.cpp -o SmtCacheBlocking -lpthread
+    make
+    echo ""
 fi
 
 osName=$(uname)
