@@ -49,37 +49,37 @@ for each cache.
 
 ```bash
 $ ./benchmark.sh 
-Intel(R) Core(TM) i5-2300 CPU @ 2.80GHz
-CPU cores: 4
-Number of threads: 4
+Intel(R) Xeon(R) Platinum 8124M CPU @ 3.00GHz
+CPU cores: 8
+Number of threads: 16
 L1 data cache size: 32 KB
-L2 cache size: 256 KB
+L2 cache size: 1024 KB
 
 === L1 cache benchmark ===
 
 Vector bytes: 32768
-Threads: 4
+Threads: 16
 Iters: 100000
-Sum: 18446744073709469952
-Seconds: 10.4486
+Sum: 18446744073709234688
+Seconds: 2.43015
 
 Vector bytes: 16384
-Threads: 4
+Threads: 16
 Iters: 200000
-Sum: 18446744073709485568
-Seconds: 9.96097
+Sum: 18446744073709372928
+Seconds: 2.2743
 
 === L2 cache benchmark ===
 
-Vector bytes: 262144
-Threads: 4
-Iters: 12500
-Sum: 18446744073708991744
-Seconds: 13.0473
+Vector bytes: 1048576
+Threads: 16
+Iters: 3125
+Sum: 686466560
+Seconds: 6.50853
 
-Vector bytes: 131072
-Threads: 4
-Iters: 25000
-Sum: 18446744073709358080
-Seconds: 11.3245
+Vector bytes: 524288
+Threads: 16
+Iters: 6250
+Sum: 18446744073663905024
+Seconds: 4.28933
 ```
