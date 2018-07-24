@@ -42,7 +42,10 @@ The ```benchmark.sh``` script runs 4 different tests:
 * 2 tests for the L2 cache
 
 All 4 tests do exactly the same amount of work, they
-only differ by their cache blocking strategy.
+only differ by their cache blocking strategy. The fastest
+timing indicates what's the best cache blocking strategy
+for each cache.
+
 
 ```bash
 $ ./benchmark.sh 
