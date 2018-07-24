@@ -59,9 +59,7 @@ then
     ratio=2
 fi
 
-command -v perf >/dev/null 2>/dev/null
-
-if [ $? -eq 0 ] && [ "$(whoami)" = "root" ]
+if [ $# -eq 1 ] && [ "$1" = "perf" ]
 then
     echo "=== L1 cache benchmark ==="
     echo ""

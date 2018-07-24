@@ -31,7 +31,7 @@ cache statistics.
 sudo apt install linux-tools-generic
 
 make
-sudo ./benchmark.sh
+sudo ./benchmark.sh perf
 ```
 
 # Usage example
