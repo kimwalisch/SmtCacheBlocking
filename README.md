@@ -38,8 +38,8 @@ sudo ./benchmark.sh
 
 The ```benchmark.sh``` script runs 4 different tests:
 
-* 2 tests for the L1 data cache
-* 2 tests for the L2 cache
+* 2 tests for L1 data cache
+* 2 tests for L2 cache
 
 All 4 tests do exactly the same amount of work, they
 only differ by their cache blocking strategy. The fastest
