@@ -78,16 +78,16 @@ then
 else
     echo "=== L1 cache benchmark ==="
     echo ""
-    ./SmtCacheBlocking $(($l1CacheSize * 1024 / 1)) $(($itersL1 * 1))
+    ./SmtCacheBlocking $(($l1CacheSize * 1024)) $itersL1
     echo ""
     sleep $sleepSeconds
-    ./SmtCacheBlocking $(($l1CacheSize * 1024 / 2)) $(($itersL1 * 2))
+    ./SmtCacheBlocking $(($l1CacheSize * 1024 / $ratio)) $(($itersL1 * $ratio))
     echo ""
     sleep $sleepSeconds
     echo "=== L2 cache benchmark ==="
     echo ""
-    ./SmtCacheBlocking $(($l2CacheSize * 1024 / 1)) $(($itersL2 * 1))
+    ./SmtCacheBlocking $(($l2CacheSize * 1024)) $itersL2
     echo ""
     sleep $sleepSeconds
-    ./SmtCacheBlocking $(($l2CacheSize * 1024 / 2)) $(($itersL2 * 2))
+    ./SmtCacheBlocking $(($l2CacheSize * 1024 / $ratio)) $(($itersL2 * $ratio))
 fi
